@@ -36,7 +36,11 @@
 			<artifactId>jakarta</artifactId>
 			<version>4.0.13</version>
 		</dependency>
-
+<dependency>
+    <groupId>jakarta.persistence</groupId>
+    <artifactId>jakarta.persistence-api</artifactId>
+    <version>3.1.0</version> <!-- Aktuellste Version -->
+</dependency>
 
 		<dependency>
 			<groupId>name.remal.gradle-plugins.lombok</groupId>
