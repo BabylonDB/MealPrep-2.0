@@ -1,40 +1,55 @@
 package ch.zhaw.mealprep.controller;
 
-import ch.zhaw.mealprep.model.MealPlan;
-import ch.zhaw.mealprep.repository.MealPlanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import ch.zhaw.mealprep.model.*;
+import ch.zhaw.mealprep.repository.*;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/mealplan")
+@RequestMapping("/api/mealplan")
 public class MealPlanController {
 
     @Autowired
     private MealPlanRepository mealPlanRepository;
 
-    // Beispielmethode: Alle MealPlans zurückgeben
-    @GetMapping("/")
+    @GetMapping
     public List<MealPlan> getAllMealPlans() {
         return mealPlanRepository.findAll();
     }
 
-    // Beispielmethode: Einen MealPlan nach ID zurückgeben
     @GetMapping("/{id}")
-    public ResponseEntity<MealPlan> getMealPlanById(@PathVariable("id") String id) {
+    public ResponseEntity<MealPlan> getMealPlanById(@PathVariable String id) {
         Optional<MealPlan> mealPlan = mealPlanRepository.findById(id);
-        if (mealPlan.isPresent()) {
-            return ResponseEntity.ok(mealPlan.get());
-        }
-        return ResponseEntity.notFound().build();
+        return mealPlan.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Beispielmethode: Einen MealPlan speichern
-    @PostMapping("/")
-    public MealPlan createMealPlan(@RequestBody MealPlan mealPlan) {
-        return mealPlanRepository.save(mealPlan);
+    @PostMapping
+    public ResponseEntity<MealPlan> createMealPlan(@RequestBody MealPlan mealPlan) {
+        MealPlan savedMealPlan = mealPlanRepository.save(mealPlan);
+        return new ResponseEntity<>(savedMealPlan, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MealPlan> updateMealPlan(@PathVariable String id, @RequestBody MealPlan mealPlanDetails) {
+        return mealPlanRepository.findById(id).map(mealPlan -> {
+            mealPlan.setUserId(mealPlanDetails.getUserId());
+            mealPlan.setRecipeId(mealPlanDetails.getRecipeId());
+            mealPlan.setDate(mealPlanDetails.getDate());
+            MealPlan updatedMealPlan = mealPlanRepository.save(mealPlan);
+            return new ResponseEntity<>(updatedMealPlan, HttpStatus.OK);
+        }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMealPlan(@PathVariable String id) {
+        if (mealPlanRepository.existsById(id)) {
+            mealPlanRepository.deleteById(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
