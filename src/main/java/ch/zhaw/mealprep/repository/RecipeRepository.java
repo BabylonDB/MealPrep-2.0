@@ -5,4 +5,4 @@ import org.springframework.stereotype.Repository;
 import ch.zhaw.mealprep.model.*;
 
 @Repository
-public interface UserRepository extends MongoRepository<User, String> {}
+public interface RecipeRepository extends MongoRepository<Recipe, String> {}

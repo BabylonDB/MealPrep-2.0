@@ -1,34 +1,27 @@
 
 package ch.zhaw.mealprep.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.List;
 
-@Entity
-@Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@RequiredArgsConstructor
+@Getter
+@Document("user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false, unique = true)
-    private String email;
-
-    @Column(nullable = false)
-    private String password;
-
+    private String id;
+    @NonNull
     private String name;
-    private String dietaryPreferences; // e.g., "vegan", "keto"
-    private Integer portionSize; // Default portion size
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<MealPlan> mealPlans;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<ShoppingList> shoppingLists;
+    @NonNull
+    private String email;
+    private String password;
+    private String preferences;
 }

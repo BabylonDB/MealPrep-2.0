@@ -1,28 +1,29 @@
 
 package ch.zhaw.mealprep.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
-@Entity
-@Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@RequiredArgsConstructor
+@Getter
+@Document("mealplan")
 public class MealPlan {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
+    @NonNull
+    private String userId; // Referenz auf User-ID
+    @NonNull
+    private String recipeId; // Referenz auf Recipe-ID
+    private LocalDate date; // Datum des Essens
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "recipe_id", nullable = false)
-    private Recipe recipe;
-
-    private LocalDate date; // Date of the meal
+    
+    
 }

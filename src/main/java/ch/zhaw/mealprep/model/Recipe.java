@@ -1,33 +1,27 @@
 
 package ch.zhaw.mealprep.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+import java.time.LocalDate;
 import java.util.List;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Entity
-@Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@RequiredArgsConstructor
+@Getter
+@Document("recipe")
 public class Recipe {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false)
+    private String id;
+    @NonNull
     private String name;
-
-    @ElementCollection
-    private List<String> ingredients; // List of ingredients
-
-    private Integer calories; // Calories per portion
-    private String tags; // e.g., "vegan", "low carb"
-
-    @Column(length = 1000)
-    private String instructions; // Preparation steps
+    private List<String> ingredients;
+    private Integer calories;
+    private String tags;
+    private String instructions;
 }

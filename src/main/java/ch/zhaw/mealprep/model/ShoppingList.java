@@ -1,27 +1,25 @@
 
 package ch.zhaw.mealprep.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
-@Entity
-@Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@RequiredArgsConstructor
+@Getter
+@Document("shoppinglist")
 public class ShoppingList {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
-    @ElementCollection
-    private List<String> ingredients; // List of needed ingredients
-
-    private boolean isCompleted; // Status of the shopping list
+    private String id;
+    @NonNull
+    private String name;
+    private List<String> items;
+    private String status;
 }

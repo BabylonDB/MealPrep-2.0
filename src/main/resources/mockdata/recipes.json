@@ -1,0 +1,28 @@
+[
+    {
+        "name": "Spaghetti Bolognese",
+        "ingredients": [
+            "Spaghetti",
+            "Tomato Sauce",
+            "Ground Beef",
+            "Onions",
+            "Garlic"
+        ],
+        "calories": 650,
+        "tags": "italian, pasta",
+        "instructions": "Cook spaghetti according to package instructions. In a pan, saut\u00e9 onions and garlic, add ground beef, and cook until browned. Mix with tomato sauce and serve over spaghetti."
+    },
+    {
+        "name": "Chicken Caesar Salad",
+        "ingredients": [
+            "Chicken Breast",
+            "Lettuce",
+            "Caesar Dressing",
+            "Parmesan Cheese",
+            "Croutons"
+        ],
+        "calories": 450,
+        "tags": "salad, healthy",
+        "instructions": "Grill chicken breast and slice. Toss lettuce with Caesar dressing, add chicken, croutons, and parmesan cheese."
+    }
+]

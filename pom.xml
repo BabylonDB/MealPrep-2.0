@@ -32,6 +32,13 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+			<version>3.4.0</version>
+		</dependency>
+
+
+		<dependency>
 			<groupId>com.queue-it.connector</groupId>
 			<artifactId>jakarta</artifactId>
 			<version>4.0.13</version>
@@ -65,6 +72,21 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		 <dependency>
+
+        <groupId>org.springframework.boot</groupId>
+
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+
+    </dependency>
+  <dependency>
+
+        <groupId>org.springframework.boot</groupId>
+
+        <artifactId>spring-boot-starter-data-mongodb</artifactId>
+
+    </dependency>
+
 	</dependencies>
 
 	<build>
