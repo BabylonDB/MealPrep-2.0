@@ -19,4 +19,4 @@ RUN ./mvnw package
  
  
 EXPOSE 8080 
-CMD ["java", "-jar", "/usr/src/app/target/Mealprep-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "/usr/src/app/target/mealprep-0.0.1-SNAPSHOT.jar"]
