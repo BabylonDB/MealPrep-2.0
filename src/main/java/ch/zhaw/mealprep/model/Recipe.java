@@ -24,6 +24,6 @@ public class Recipe {
     private String name;
     private List<String> ingredients;
     private Integer calories;
-    private String tags;
-    private String instructions;
+    
+    
 }
