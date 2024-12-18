@@ -5,7 +5,8 @@ env:
 
 on:
   push:
-  workflow_dispatch:
+    branches:
+    - main
 
 permissions:
   contents: read

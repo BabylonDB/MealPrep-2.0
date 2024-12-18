@@ -1,4 +1,3 @@
-
 package ch.zhaw.mealprep.model;
 
 import org.springframework.data.annotation.Id;
@@ -9,7 +8,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @NoArgsConstructor
@@ -20,12 +18,13 @@ import java.util.List;
 public class MealPlan {
     @Id
     private String id;
-    @NonNull
-    private String userId; // Referenz auf User-ID
-    @NonNull
-    private String recipeId; // Referenz auf Recipe-ID
-    private LocalDate date; // Datum des Essens
 
-    
-    
+    @NonNull
+    private String name; // Name des Meal Plans
+
+    private String description; // Beschreibung des Meal Plans
+
+    private List<String> ingredients; // Liste der Zutaten wie im Recipe-Modell
+
+    private List<String> recipes; // Liste von Rezept-IDs
 }

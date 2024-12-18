@@ -39,8 +39,6 @@ public class RecipeController {
             recipe.setName(recipeDetails.getName());
             recipe.setIngredients(recipeDetails.getIngredients());
             recipe.setCalories(recipeDetails.getCalories());
-            recipe.setTags(recipeDetails.getTags());
-            recipe.setInstructions(recipeDetails.getInstructions());
             Recipe updatedRecipe = recipeRepository.save(recipe);
             return new ResponseEntity<>(updatedRecipe, HttpStatus.OK);
         }).orElseGet(() -> ResponseEntity.notFound().build());
