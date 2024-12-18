@@ -1,7 +1,7 @@
 <script>
     import axios from "axios";
     import { onMount } from "svelte";
-
+    import { jwt_token } from "../../store"; 
     const api_root = "http://localhost:8080/api";
 
     let mealPlans = [];
@@ -16,6 +16,7 @@
         errorMessage = "";
         try {
             const response = await axios.get(`${api_root}/mealplan`);
+            headers: { Authorization: "Bearer " + $jwt_token }
             mealPlans = response.data;
             console.log('Fetched meal plans:', mealPlans);
         } catch (error) {

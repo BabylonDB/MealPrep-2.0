@@ -1,6 +1,6 @@
 <script>
 import axios from "axios";
-
+import { jwt_token } from "../../store"; 
 const api_root = "http://localhost:8080/api"; 
 import { onMount } from "svelte";
 
@@ -24,7 +24,7 @@ function getRecipes() {
   var config = {
     method: "get",
     url: api_root + "/recipe",
-    headers: {},
+    headers: { Authorization: "Bearer " + $jwt_token }
   };
 
   axios(config)
