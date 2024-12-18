@@ -3,6 +3,10 @@ import axios from "axios";
 
 const api_root = "http://localhost:8080/api"; 
 import { onMount } from "svelte";
+<<<<<<< HEAD
+=======
+import { jwt_token } from "../../store";
+>>>>>>> cfda75d30de0c18ee6a223bf3e7ed708c2d43544
 
 
 

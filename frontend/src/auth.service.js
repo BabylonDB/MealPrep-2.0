@@ -120,7 +120,11 @@ function getUserInfo(access_token) {
 async function logout() {
   try {
     await createClient();
+<<<<<<< HEAD
     user.set({});
+=======
+    user.set({ name: "" });
+>>>>>>> cfda75d30de0c18ee6a223bf3e7ed708c2d43544
     jwt_token.set("");
     await auth0Client.logout({logoutParams:{returnTo: window.location.origin}});
   } catch (e) {
@@ -135,4 +139,8 @@ const auth = {
   logout,
 };
 
+<<<<<<< HEAD
 export default auth;
+=======
+export default auth; 
+>>>>>>> cfda75d30de0c18ee6a223bf3e7ed708c2d43544

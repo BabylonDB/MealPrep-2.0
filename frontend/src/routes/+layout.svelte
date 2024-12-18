@@ -1,4 +1,6 @@
 <script>
+ //@ts-nocheck
+
   import "./styles.css";
   import { isAuthenticated, user } from "../store"; 
 import auth from "../auth.service";

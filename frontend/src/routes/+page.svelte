@@ -1,6 +1,13 @@
 <script>
+<<<<<<< HEAD
     import { isAuthenticated } from "../store";
     import auth from "../auth.service";
+=======
+ //@ts-nocheck
+
+    import { isAuthenticated } from "../store";
+   import auth from "../auth.service";
+>>>>>>> cfda75d30de0c18ee6a223bf3e7ed708c2d43544
 
     let username = "";
     let password = "";
@@ -10,7 +17,11 @@
         // form validation with bootstrap: see https://getbootstrap.com/docs/5.3/forms/validation/
         if (loginForm.checkValidity()) {
             console.log("login");
+<<<<<<< HEAD
             auth.login(username, password);
+=======
+           // auth.login(username, password);
+>>>>>>> cfda75d30de0c18ee6a223bf3e7ed708c2d43544
         }
         loginForm.classList.add("was-validated");
     }
