@@ -10,7 +10,14 @@
   let recipesForSelectedMealPlan = []; // Rezeptdetails für den ausgewählten MealPlan
   let isLoading = false;
   let errorMessage = "";
-   
+
+  // JWT-Token debuggen (nur zu Debugging-Zwecken hinzufügen)
+  console.log("JWT Token:", $jwt_token);
+
+  // Token dekodieren (optional, falls Debugging erforderlich ist)
+  // import jwt_decode from "jwt-decode";
+  // const decodedToken = jwt_decode($jwt_token);
+  // console.log("Decoded Token:", decodedToken);
 
   // MealPlans beim Laden der Seite abrufen
   onMount(() => {
@@ -22,13 +29,23 @@
     isLoading = true;
     errorMessage = "";
     try {
-    const response = await axios.get(`${api_root}/mealplan`, {
-      headers: { Authorization: "Bearer " + $jwt_token }
-    });
+      const response = await axios.get(`${api_root}/mealplan`, {
+        headers: { Authorization: "Bearer " + $jwt_token },
+      });
       mealPlans = response.data;
     } catch (error) {
-      errorMessage = "Could not fetch meal plans. Please try again.";
-      console.error(error);
+      if (error.response) {
+        if (error.response.status === 401) {
+          errorMessage = "Unauthorized. Please check your login.";
+        } else if (error.response.status === 403) {
+          errorMessage = "Forbidden. You do not have access.";
+        } else {
+          errorMessage = "Error fetching meal plans: " + error.response.data;
+        }
+      } else {
+        errorMessage = "Network error or server not reachable.";
+      }
+      console.error("Error fetching meal plans:", error);
     } finally {
       isLoading = false;
     }
@@ -40,14 +57,24 @@
     errorMessage = "";
     recipesForSelectedMealPlan = [];
     try {
-    const response = await axios.get(`${api_root}/mealplan/${mealPlanId}/recipes`, {
-      headers: { Authorization: "Bearer " + $jwt_token }
-    });
+      const response = await axios.get(`${api_root}/mealplan/${mealPlanId}/recipes`, {
+        headers: { Authorization: "Bearer " + $jwt_token },
+      });
       recipesForSelectedMealPlan = response.data;
       selectedMealPlan = mealPlans.find((plan) => plan.id === mealPlanId);
     } catch (error) {
-      errorMessage = "Could not fetch recipes for the selected meal plan.";
-      console.error(error);
+      if (error.response) {
+        if (error.response.status === 401) {
+          errorMessage = "Unauthorized. Please check your login.";
+        } else if (error.response.status === 403) {
+          errorMessage = "Forbidden. You do not have access.";
+        } else {
+          errorMessage = "Error fetching recipes: " + error.response.data;
+        }
+      } else {
+        errorMessage = "Network error or server not reachable.";
+      }
+      console.error("Error fetching recipes for meal plan:", error);
     } finally {
       isLoading = false;
     }
