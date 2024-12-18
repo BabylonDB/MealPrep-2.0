@@ -4,6 +4,10 @@ import axios from "axios";
 const api_root = "http://localhost:8080/api"; 
 import { onMount } from "svelte";
 
+=======
+import { jwt_token } from "../../store";
+>>>>>>> main
+
 
 
 let recipes = [];

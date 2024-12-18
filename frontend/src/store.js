@@ -1,13 +1,19 @@
 import { writable, derived } from "svelte/store";
 
 // user 
+
 export const user = writable({});
+
 let sessionUser = sessionStorage.getItem("user");
 if (sessionUser) {
     user.set(JSON.parse(sessionUser));
 } else {
     // create the key "user" in the session storage if it doesn't exist yet
+
     sessionStorage.setItem("user", {});
+
+    
+
 }
 // update the user in the sessionStorage on changes
 user.subscribe(user => sessionStorage.setItem("user", JSON.stringify(user)));

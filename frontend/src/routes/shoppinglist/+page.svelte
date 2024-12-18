@@ -2,6 +2,9 @@
     import axios from "axios";
     import { onMount } from "svelte";
 
+    import { jwt_token } from "../../store";
+
+
     const api_root = "http://localhost:8080/api";
 
     let mealPlans = [];
