@@ -120,7 +120,7 @@ function getUserInfo(access_token) {
 async function logout() {
   try {
     await createClient();
-    user.set({});
+    user.set({ name: "" });
     jwt_token.set("");
     await auth0Client.logout({logoutParams:{returnTo: window.location.origin}});
   } catch (e) {
