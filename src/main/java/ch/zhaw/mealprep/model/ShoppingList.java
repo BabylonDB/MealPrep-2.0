@@ -22,6 +22,6 @@ public class ShoppingList {
     private String id;
     @NonNull
     private String name;
-    private List<String> items;
-    private String status;
+    private List<String> ingredients;
+    
 }
