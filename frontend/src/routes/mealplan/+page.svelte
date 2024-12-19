@@ -79,6 +79,7 @@
       isLoading = false;
     }
   }
+  
 </script>
 
 <h1 class="mt-3">Meal Plans</h1>
