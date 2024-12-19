@@ -15,8 +15,9 @@
         isLoading = true;
         errorMessage = "";
         try {
-            const response = await axios.get(`${api_root}/mealplan`);
-            headers: { Authorization: "Bearer " + $jwt_token }
+            const response = await axios.get(`${api_root}/mealplan`, {
+                headers: { Authorization: "Bearer " + $jwt_token },
+            });
             mealPlans = response.data;
             console.log('Fetched meal plans:', mealPlans);
         } catch (error) {
@@ -38,7 +39,9 @@
         errorMessage = "";
 
         try {
-            const response = await axios.get(`${api_root}/shoppinglist/generate/${mealPlanId}`);
+            const response = await axios.get(`${api_root}/shoppinglist/generate/${mealPlanId}`, {
+                headers: { Authorization: "Bearer " + $jwt_token },
+            });
             shoppingList = response.data || [];
         } catch (error) {
             errorMessage = error.response?.data?.message || "Could not fetch the shopping list.";

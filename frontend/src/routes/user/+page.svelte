@@ -20,9 +20,10 @@
   async function getAllUsers() {
     isLoading = true;
     errorMessage = "";
-    headers: { Authorization: "Bearer " + $jwt_token }
     try {
-      const response = await axios.get(api_root);
+      const response = await axios.get(api_root, {
+        headers: { Authorization: "Bearer " + $jwt_token },
+      });
       users = response.data;
     } catch (error) {
       errorMessage = "Could not fetch users.";
@@ -42,11 +43,15 @@
     try {
       if (selectedUserId) {
         // Benutzer aktualisieren
-        await axios.put(`${api_root}/${selectedUserId}`, user);
+        await axios.put(`${api_root}/${selectedUserId}`, user, {
+          headers: { Authorization: "Bearer " + $jwt_token },
+        });
         alert("User updated successfully.");
       } else {
         // Benutzer hinzufügen
-        await axios.post(api_root, user);
+        await axios.post(api_root, user, {
+          headers: { Authorization: "Bearer " + $jwt_token },
+        });
         alert("User added successfully.");
       }
       resetForm();
@@ -60,7 +65,9 @@
   // Benutzer löschen
   async function deleteUser(id) {
     try {
-      await axios.delete(`${api_root}/${id}`);
+      await axios.delete(`${api_root}/${id}`, {
+        headers: { Authorization: "Bearer " + $jwt_token },
+      });
       alert("User deleted successfully.");
       getAllUsers();
     } catch (error) {
@@ -140,7 +147,7 @@
         type="text"
         id="preferences"
         class="form-control"
-        placeholder="e.g., vegan, low carb"
+        placeholder="e.g., Vegetarian, Fitness"
       />
     </div>
   </div>
