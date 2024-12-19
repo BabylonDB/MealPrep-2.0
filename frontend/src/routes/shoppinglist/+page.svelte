@@ -2,15 +2,38 @@
     import axios from "axios";
     import { onMount } from "svelte";
     import { jwt_token } from "../../store"; 
+
     const api_root = "http://localhost:8080/api";
 
+    let recipes = [];
+    let selectedRecipeId = null;
+    let ingredients = [];
+    let isLoading = false;
+    let errorMessage = "";
     let mealPlans = [];
     let selectedMealPlanId = null;
     let shoppingList = [];
-    let isLoading = false;
-    let errorMessage = "";
+    let recipesForSelectedMealPlan = [];
 
-    // Alle Meal Plans abrufen
+    // Fetch all recipes
+    async function getRecipes() {
+        isLoading = true;
+        errorMessage = "";
+        try {
+            const response = await axios.get(`${api_root}/recipe`, {
+                headers: { Authorization: "Bearer " + $jwt_token },
+            });
+            recipes = response.data;
+            console.log('Fetched recipes:', recipes);
+        } catch (error) {
+            errorMessage = "Could not fetch recipes.";
+            console.error(error);
+        } finally {
+            isLoading = false;
+        }
+    }
+
+    // Fetch all meal plans
     async function getMealPlans() {
         isLoading = true;
         errorMessage = "";
@@ -20,6 +43,7 @@
             });
             mealPlans = response.data;
             console.log('Fetched meal plans:', mealPlans);
+            console.log('Selected Meal Plan ID:', selectedMealPlanId);
         } catch (error) {
             errorMessage = "Could not fetch meal plans.";
             console.error(error);
@@ -28,36 +52,45 @@
         }
     }
 
-    // Shopping-Liste für einen MealPlan abrufen
-    async function getShoppingList(mealPlanId) {
-        if (!mealPlanId) {
-            errorMessage = "Please select a valid Meal Plan.";
-            return;
-        }
+    // Fetch recipes for a selected meal plan
+    async function fetchRecipesForMealPlan(mealPlanId) {
+        console.log('hELLOR');
         isLoading = true;
-        shoppingList = [];
         errorMessage = "";
-
+        recipesForSelectedMealPlan = [];
         try {
-            const response = await axios.get(`${api_root}/shoppinglist/generate/${mealPlanId}`, {
+            const response = await axios.get(`${api_root}/mealplan/${mealPlanId}/recipes`, {
                 headers: { Authorization: "Bearer " + $jwt_token },
             });
-            shoppingList = response.data || [];
+            recipesForSelectedMealPlan = response.data;
+            console.log('Fetched recipes for selected meal plan:', recipesForSelectedMealPlan);
+            ingredients = recipesForSelectedMealPlan.flatMap(recipe => recipe.ingredients);
         } catch (error) {
-            errorMessage = error.response?.data?.message || "Could not fetch the shopping list.";
-            console.error(error);
+            if (error.response) {
+                if (error.response.status === 401) {
+                    errorMessage = "Unauthorized. Please check your login.";
+                } else if (error.response.status === 403) {
+                    errorMessage = "Forbidden. You do not have access.";
+                } else {
+                    errorMessage = "Error fetching recipes: " + error.response.data;
+                }
+            } else {
+                errorMessage = "Network error or server not reachable.";
+            }
+            console.error("Error fetching recipes for meal plan:", error);
         } finally {
             isLoading = false;
         }
     }
 
-    // Seite beim Laden Meal Plans abrufen
+    // Fetch recipes and meal plans on component mount
     onMount(() => {
+        getRecipes();
         getMealPlans();
     });
 </script>
 
-<h1>Shopping List Generator</h1>
+<h1>Shopping List Manager</h1>
 
 {#if isLoading}
     <div class="spinner-border text-primary" role="status">
@@ -71,27 +104,31 @@
     <div class="mb-4">
         <label for="mealPlanSelector" class="form-label">Select a Meal Plan</label>
         <select
-            id="mealPlanSelector"
-            class="form-select"
-            bind:value={selectedMealPlanId}
-            on:change={() => {
+             id="mealPlanSelector"
+             class="form-select"
+             bind:value={selectedMealPlanId}
+               on:change={() => {
+                console.log('Dropdown changed, selectedMealPlanId:', selectedMealPlanId);
                 if (selectedMealPlanId) {
-                    getShoppingList(selectedMealPlanId);
+                   fetchRecipesForMealPlan(selectedMealPlanId);
                 }
-            }}
-        >
-        <option value="" disabled selected={selectedMealPlanId === null}>Choose a Meal Plan</option>
-
+             }}
+        >    
+            <option value="" disabled selected={selectedMealPlanId === null}>Choose a Meal Plan</option>
             {#each mealPlans as mealPlan}
-                <option value={mealPlan._id}>{mealPlan.name}</option>
+                <option value={mealPlan.id}>{mealPlan.name}</option>
             {/each}
+        
         </select>
+
+        
+        
     </div>
 
-    {#if shoppingList.length > 0}
-        <h2>Shopping List</h2>
+    {#if ingredients.length > 0}
+        <h2>Ingredients</h2>
         <ul class="list-group">
-            {#each shoppingList as ingredient}
+            {#each ingredients as ingredient}
                 <li class="list-group-item">{ingredient}</li>
             {/each}
         </ul>

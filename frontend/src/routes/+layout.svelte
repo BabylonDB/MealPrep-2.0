@@ -28,17 +28,21 @@
         <li class="nav-item">
           <a class="nav-link" href="/recipe">Recipe</a>
         </li>
+        {/if} 
+        {#if $isAuthenticated}
         <li class="nav-item">
           <a class="nav-link" href="/account">Account</a>
-        </li>
-        {/if} 
+        </li>{/if} 
+        {#if $isAuthenticated}
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="/mealplan">Mealplan</a>
         </li>
+        {/if}
+        {#if $isAuthenticated}
         <li class="nav-item">
           <a class="nav-link" href="/shoppinglist">Shoppinglist</a>
         </li>
-       
+        {/if}
       </ul>
       <div class="d-flex"> 
         {#if $isAuthenticated} 

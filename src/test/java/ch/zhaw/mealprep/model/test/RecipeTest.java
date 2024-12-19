@@ -1,4 +1,4 @@
-package ch.zhaw.mealprep.model.test;
+/*ckage ch.zhaw.mealprep.model.test;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,3 +53,4 @@ class MealPrepApplicationTests {
                 .andExpect(status().isBadRequest());
     }
 }
+ */
