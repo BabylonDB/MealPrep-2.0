@@ -14,6 +14,7 @@
     let selectedMealPlanId = null;
     let shoppingList = [];
     let recipesForSelectedMealPlan = [];
+    let mapDiv; // Referenz für die Map
 
     // Fetch all recipes
     async function getRecipes() {
@@ -83,6 +84,28 @@
         }
     }
 
+    // Initialize Google Maps
+    function initializeMap() {
+    if (mapDiv) {
+        new google.maps.Map(mapDiv, {
+            center: { lat: 47.4988, lng: 8.7241 }, // Koordinaten für Winterthur, Schweiz
+            zoom: 15, // Zoom-Level
+        });
+    } else {
+        console.error("Map container not found");
+    }
+}
+
+    // Load Google Maps API and initialize the map
+    onMount(() => {
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAZmEp7aVY1dFCvVMtH-i1Z2-1pgB-fX5o`;
+        script.async = true;
+        script.defer = true;
+        script.onload = initializeMap;
+        document.head.appendChild(script);
+    });
+
     // Fetch recipes and meal plans on component mount
     onMount(() => {
         getRecipes();
@@ -99,30 +122,27 @@
 {:else}
     {#if errorMessage}
         <div class="alert alert-danger">{errorMessage}</div>
+        {/if}
     {/if}
 
     <div class="mb-4">
         <label for="mealPlanSelector" class="form-label">Select a Meal Plan</label>
         <select
-             id="mealPlanSelector"
-             class="form-select"
-             bind:value={selectedMealPlanId}
-               on:change={() => {
+            id="mealPlanSelector"
+            class="form-select"
+            bind:value={selectedMealPlanId}
+            on:change={() => {
                 console.log('Dropdown changed, selectedMealPlanId:', selectedMealPlanId);
                 if (selectedMealPlanId) {
-                   fetchRecipesForMealPlan(selectedMealPlanId);
+                    fetchRecipesForMealPlan(selectedMealPlanId);
                 }
-             }}
-        >    
+            }}
+        >
             <option value="" disabled selected={selectedMealPlanId === null}>Choose a Meal Plan</option>
             {#each mealPlans as mealPlan}
                 <option value={mealPlan.id}>{mealPlan.name}</option>
             {/each}
-        
         </select>
-
-        
-        
     </div>
 
     {#if ingredients.length > 0}
@@ -135,4 +155,17 @@
     {:else}
         <p>No ingredients found for the selected Meal Plan.</p>
     {/if}
-{/if}
+
+    <!-- Google Maps Integration -->
+    <h2>Google Maps</h2>
+    <div id="map" bind:this={mapDiv}></div>
+
+<style>
+    #map {
+        width: 100%;
+        height: 400px;
+        margin-top: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+</style>
