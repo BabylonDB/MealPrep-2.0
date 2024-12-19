@@ -157,7 +157,7 @@
     {/if}
 
     <!-- Google Maps Integration -->
-    <h2>Google Maps</h2>
+    <h2>Supermarkt</h2>
     <div id="map" bind:this={mapDiv}></div>
 
 <style>
