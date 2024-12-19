@@ -19,7 +19,7 @@
 {#if $isAuthenticated}
     <h1>Mealprep</h1>
     <!-- Beispiel für die Verwendung von Bildern im Ordner 'static/images' -->
-    <img src="/images/vite.svg" alt="Vite Logo" />
+    <img src="/images/full-meal-prep-on-fleek.jpg" alt="Vite Logo" />
 {:else}
     <div class="container mt-5">
         <div class="row justify-content-center">
