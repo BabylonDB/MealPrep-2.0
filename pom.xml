@@ -5,7 +5,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.0</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/> 
 	</parent>
 	<groupId>ch.zhaw</groupId>
 	<artifactId>mealprep</artifactId>
@@ -44,7 +44,7 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>4.11.0</version> <!-- Verwenden Sie eine aktuelle Version -->
+			<version>4.11.0</version> 
 			<scope>test</scope>
 		</dependency>
 		

@@ -1,23 +1,23 @@
 /* In dieser Datei können globale Styles definiert werden */
 
-/* Hintergrundfarbe für die gesamte Seite */
+
 body {
-    background-color: rgb(232, 255, 232); /* Ein helles Grün */
-    margin: 0; /* Entfernt Standardabstände */
+    background-color: rgb(216, 221, 216); 
+    margin: 0; 
 }
 
-/* Nur Text und Bild zentrieren */
+
 .center-container {
     display: flex;
-    justify-content: center; /* Zentriert horizontal */
-    align-items: center;    /* Zentriert vertikal */
-    flex-direction: column; /* Stapelt Text und Bild vertikal */
-    height: 100vh;          /* Stellt sicher, dass der Container den gesamten Viewport einnimmt */
+    justify-content: center; 
+    align-items: center;    
+    flex-direction: column; 
+    height: 100vh;          
 }
 
 /* Stil für h1 */
 h1 {
-    color: rgb(59, 124, 45); /* Weiß für besseren Kontrast */
+    color: rgb(59, 124, 45); 
 }
 
 /* Stil für h2 */
