@@ -2,7 +2,7 @@
 
 /* Hintergrundfarbe für die gesamte Seite */
 body {
-    background-color: rgb(40, 147, 40); /* Ein helles Grün */
+    background-color: rgb(232, 255, 232); /* Ein helles Grün */
     margin: 0; /* Entfernt Standardabstände */
 }
 
@@ -17,12 +17,12 @@ body {
 
 /* Stil für h1 */
 h1 {
-    color: white; /* Weiß für besseren Kontrast */
+    color: rgb(59, 124, 45); /* Weiß für besseren Kontrast */
 }
 
 /* Stil für h2 */
 h2 {
-    color: white; /* Weiß für besseren Kontrast */
+    color: rgb(59, 124, 45); /* Weiß für besseren Kontrast */
 }
 
 /* Stil für img */
@@ -33,20 +33,20 @@ img {
 
 /* Stil für Buttons */
 button {
-    background-color: green; /* Grüner Hintergrund für alle Buttons */
-    color: white;            /* Weißer Text für guten Kontrast */
-    border: none;            /* Keine Ränder für einen sauberen Look */
-    padding: 10px 20px;      /* Innenabstand für bessere Lesbarkeit */
-    cursor: pointer;         /* Zeigt einen Pointer-Cursor bei Hover */
+    background-color: green; 
+    color: white;            
+    border: none;            
+    padding: 10px 20px;      
+    cursor: pointer;         
 }
 
 button:hover {
-    background-color: darkgreen; /* Dunkleres Grün bei Hover für visuelles Feedback */
+    background-color: darkgreen; 
 }
 
 /* Stil für Labels */
 label.form-label {
-    color: white; /* Weißer Text für Labels */
+    color: rgb(59, 124, 45); 
 }
 
 /* Stil für spezifische Buttons */
