@@ -47,4 +47,28 @@ public class MealPlanService {
         
         return mealPlanRepository.save(mealPlan);
     }
+
+
+    public void addRecipeToMealPlan(String mealPlanId, String recipeId) {
+        // 1. Suche den MealPlan anhand der ID
+        MealPlan mealPlan = mealPlanRepository.findById(mealPlanId)
+                .orElseThrow(() -> new RuntimeException("Meal Plan not found with ID: " + mealPlanId));
+    
+        // 2. Überprüfe, ob das Rezept bereits im MealPlan existiert
+        if (mealPlan.getRecipes().contains(recipeId)) {
+            throw new RuntimeException("Recipe already exists in Meal Plan.");
+        }
+    
+        // 3. Überprüfe, ob das Rezept existiert
+        boolean recipeExists = recipeRepository.existsById(recipeId);
+        if (!recipeExists) {
+            throw new RuntimeException("Recipe not found with ID: " + recipeId);
+        }
+    
+        // 4. Füge das Rezept dem MealPlan hinzu
+        mealPlan.getRecipes().add(recipeId);
+    
+        // 5. Speichere den aktualisierten MealPlan
+        mealPlanRepository.save(mealPlan);
+    }
 }

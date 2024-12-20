@@ -13,11 +13,16 @@
     calories: null,
   };
 
+  let mealPlans = [];
+  let selectedMealPlanId = null;
+  let selectedRecipeForMealPlan = null;
+
   let editRecipeId = null; // ID des zu bearbeitenden Rezepts
 
   // Fetch all recipes on mount
   onMount(() => {
     getRecipes();
+    fetchMealPlans(); // Fetch MealPlans on page load
   });
 
   // Get all recipes
@@ -35,6 +40,18 @@
       .catch(function (error) {
         alert("Could not fetch recipes");
         console.log(error);
+      });
+  }
+
+  function fetchMealPlans() {
+    axios.get(`${api_root}/mealplan`, {
+      headers: { Authorization: "Bearer " + $jwt_token },
+    })
+      .then((response) => {
+        mealPlans = response.data;
+      })
+      .catch((error) => {
+        console.error("Could not fetch meal plans:", error);
       });
   }
 
@@ -119,6 +136,37 @@
         console.error("Error:", error);
       });
   }
+
+  function openMealPlanSelector(recipeId) {
+    selectedRecipeForMealPlan = recipes.find((r) => r.id === recipeId);
+    selectedMealPlanId = null;
+  }
+
+  function assignRecipeToMealPlan() {
+    if (!selectedMealPlanId || !selectedRecipeForMealPlan) {
+      alert("Please select a Meal Plan.");
+      return;
+    }
+
+    axios.put(
+  `${api_root}/mealplan/${selectedMealPlanId}/recipes`,
+  { recipeId: selectedRecipeForMealPlan.id }, // recipeId als String
+  {
+    headers: {
+      Authorization: "Bearer " + $jwt_token,
+    },
+  }
+)
+  .then(() => {
+    alert("Recipe added to Meal Plan successfully.");
+    selectedRecipeForMealPlan = null;
+    selectedMealPlanId = null;
+  })
+  .catch((error) => {
+    console.error("Error assigning recipe to Meal Plan:", error);
+    alert("Could not add the recipe to the Meal Plan.");
+  });
+}
 </script>
 
 <h1 class="mt-3">{editRecipeId ? "Edit Recipe" : "Create Recipe"}</h1>
@@ -179,8 +227,47 @@
         <td>
           <button class="btn btn-secondary btn-sm" on:click={() => editRecipe(recipe)}>Edit</button>
           <button class="btn btn-danger btn-sm" on:click={() => deleteRecipe(recipe.id)}>Delete</button>
+          <button class="btn btn-success btn-sm" on:click={() => openMealPlanSelector(recipe.id)}>Add to Meal Plan</button>
         </td>
       </tr>
     {/each}
   </tbody>
 </table>
+
+{#if selectedRecipeForMealPlan}
+  <div class="modal show" tabindex="-1" style="display: block;" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add "{selectedRecipeForMealPlan.name}" to a Meal Plan</h5>
+          <button type="button" class="btn-close" on:click={() => selectedRecipeForMealPlan = null}></button>
+        </div>
+        <div class="modal-body">
+          <label for="mealplan-select">Select a Meal Plan:</label>
+          <select bind:value={selectedMealPlanId} id="mealplan-select" class="form-select">
+            <option value="" disabled>Select Meal Plan</option>
+            {#each mealPlans as mealPlan}
+              <option value={mealPlan.id}>{mealPlan.name}</option>
+            {/each}
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-primary"
+            on:click={assignRecipeToMealPlan}
+          >
+            Add
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            on:click={() => selectedRecipeForMealPlan = null}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+{/if}

@@ -11,6 +11,7 @@ import ch.zhaw.mealprep.repository.MealPlanRepository;
 import ch.zhaw.mealprep.service.MealPlanService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -56,7 +57,6 @@ public class MealPlanController {
     public ResponseEntity<MealPlan> updateMealPlan(@PathVariable String id, @RequestBody MealPlan mealPlanDetails) {
         return mealPlanRepository.findById(id).map(existingMealPlan -> {
             existingMealPlan.setName(mealPlanDetails.getName());
-            existingMealPlan.setDescription(mealPlanDetails.getDescription());
             existingMealPlan.setIngredients(mealPlanDetails.getIngredients());
             existingMealPlan.setRecipes(mealPlanDetails.getRecipes());
 
@@ -64,26 +64,12 @@ public class MealPlanController {
             return new ResponseEntity<>(updatedMealPlan, HttpStatus.OK);
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
+    
 
     // Rezept zu einem Meal Plan hinzufügen
-    @PutMapping("/{mealPlanId}/addRecipe")
-    public ResponseEntity<?> addRecipeToMealPlan(@PathVariable String mealPlanId, @RequestBody String recipeId) {
-        Optional<MealPlan> mealPlanOptional = mealPlanRepository.findById(mealPlanId);
-        if (mealPlanOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Meal Plan not found with ID: " + mealPlanId);
-        }
+    
 
-        MealPlan mealPlan = mealPlanOptional.get();
-        if (mealPlan.getRecipes().contains(recipeId)) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Recipe already exists in Meal Plan.");
-        }
-
-        mealPlan.getRecipes().add(recipeId);
-        MealPlan updatedMealPlan = mealPlanRepository.save(mealPlan);
-        return ResponseEntity.ok(updatedMealPlan);
-    }
-
-    // Meal Plan löschen
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMealPlan(@PathVariable String id) {
         if (mealPlanRepository.existsById(id)) {
@@ -93,7 +79,7 @@ public class MealPlanController {
         return ResponseEntity.notFound().build();
     }
 
-    // Rezepte zu einem bestimmten Meal Plan abrufen
+   
     @GetMapping("/{mealPlanId}/recipes")
     public ResponseEntity<List<Recipe>> getRecipesForMealPlan(@PathVariable String mealPlanId) {
         try {
@@ -103,4 +89,13 @@ public class MealPlanController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+    @PutMapping("/{mealPlanId}/recipes")
+public ResponseEntity<?> addRecipeToMealPlan(
+        @PathVariable String mealPlanId,
+        @RequestBody Map<String, String> payload) {
+    String recipeId = payload.get("recipeId");
+    mealPlanService.addRecipeToMealPlan(mealPlanId, recipeId);
+    return ResponseEntity.ok("Recipe added to Meal Plan successfully.");
+}
+    
 }
