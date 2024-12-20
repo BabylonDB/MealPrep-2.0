@@ -1,27 +1,50 @@
-/* In dieser Datei können globale Styles definiert werden */
-
-/* Hintergrundfarbe für die gesamte Seite */
 body {
-    background-color: rgb(40, 147, 40); /* Ein helles Grün */
-    margin: 0; /* Entfernt Standardabstände */
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: rgb(40, 147, 40);
 }
 
-/* Nur Text und Bild zentrieren */
 .center-container {
     display: flex;
-    justify-content: center; /* Zentriert horizontal */
-    align-items: center;    /* Zentriert vertikal */
-    flex-direction: column; /* Stapelt Text und Bild vertikal */
-    height: 100vh;          /* Stellt sicher, dass der Container den gesamten Viewport einnimmt */
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
 }
 
-/* Stil für h1 */
-h1 {
-    color: white; /* Weiß für besseren Kontrast */
-}
-
-/* Stil für img */
 img {
-    width: 600px; /* oder gewünschte Breite */
-    height: 500px; /* sorgt für das richtige Seitenverhältnis */
+    max-width: 100%;
+    height: auto;
+    margin: 10px;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    font-size: 2em;
+}
+
+button {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 5%;
+    margin: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: darkgreen;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5em;
+    }
+
+    button {
+        padding: 10px 10%;
+    }
 }

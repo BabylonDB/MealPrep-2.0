@@ -5,7 +5,7 @@
 
   import { page } from "$app/stores";
 
-  const api_root = `${$page.url.origin}/api`;
+  const api_root = `${$page.url.origin}/api/user`;
 
   let users = []; // Liste aller Benutzer
   let user = {
@@ -20,20 +20,29 @@
 
   // Alle Benutzer abrufen
   async function getAllUsers() {
-    isLoading = true;
-    errorMessage = "";
-    try {
-      const response = await axios.get(api_root, {
-        headers: { Authorization: "Bearer " + $jwt_token },
-      });
+  isLoading = true;
+  errorMessage = "";
+  try {
+    const response = await axios.get(api_root, {
+      headers: { Authorization: "Bearer " + $jwt_token },
+    });
+    console.log("API Response:", response.data);
+
+    if (Array.isArray(response.data)) {
       users = response.data;
-    } catch (error) {
-      errorMessage = "Could not fetch users.";
-      console.error("Error fetching users:", error);
-    } finally {
-      isLoading = false;
+    } else {
+      console.error("Unexpected API response format:", response.data);
+      users = [];
+      errorMessage = "Unexpected data format from server.";
     }
+  } catch (error) {
+    errorMessage = "Could not fetch users.";
+    console.error("Error fetching users:", error.response || error.message);
+  } finally {
+    isLoading = false;
   }
+}
+
 
   // Benutzer hinzufügen oder aktualisieren
   async function saveUser() {
@@ -80,12 +89,25 @@
 
   // Benutzer zum Bearbeiten laden
   function editUser(id) {
-    const selectedUser = users.find((u) => u.id === id);
-    if (selectedUser) {
-      user = { ...selectedUser };
-      selectedUserId = id;
-    }
+  if (!id) {
+    console.error("Invalid ID provided for editUser:", id);
+    return;
   }
+  
+  if (!Array.isArray(users)) {
+    console.error("Users is not an array:", users);
+    return;
+  }
+
+  const selectedUser = users.find((u) => u.id === id);
+  if (selectedUser) {
+    user = { ...selectedUser };
+    selectedUserId = id;
+  } else {
+    console.error("User not found with ID:", id);
+  }
+}
+
 
   // Formular zurücksetzen
   function resetForm() {
