@@ -3,7 +3,9 @@
     import { onMount } from "svelte";
     import { jwt_token } from "../../store"; 
 
-    const api_root = "http://localhost:8080/api";
+    import { page } from "$app/stores";
+
+const api_root = `${$page.url.origin}/api`;
 
     let recipes = [];
     let selectedRecipeId = null;

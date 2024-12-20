@@ -1,6 +1,9 @@
 <script>
     import { user } from "../../store";
     import { onMount } from "svelte";
+    import { page } from "$app/stores";
+
+  const api_root = `${$page.url.origin}/api`;
   
     let accountDetails;
   

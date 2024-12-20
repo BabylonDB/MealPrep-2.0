@@ -1,9 +1,11 @@
 <script>
   import axios from "axios";
   import { onMount } from "svelte";
-  import { jwt_token } from "../../store"; 
+  import { jwt_token } from "../../store";
+  import { page } from "$app/stores";
 
-  const api_root = "http://localhost:8080/api";
+  const api_root = `${$page.url.origin}/api`;
+
 
   let mealPlans = [];
   let selectedMealPlan = null; // Für die Auswahl eines spezifischen MealPlans
