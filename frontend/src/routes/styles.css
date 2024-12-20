@@ -1,50 +1,57 @@
+/* In dieser Datei können globale Styles definiert werden */
+
+/* Hintergrundfarbe für die gesamte Seite */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: rgb(40, 147, 40);
+    background-color: rgb(40, 147, 40); /* Ein helles Grün */
+    margin: 0; /* Entfernt Standardabstände */
 }
 
+/* Nur Text und Bild zentrieren */
 .center-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    min-height: 100vh;
+    justify-content: center; /* Zentriert horizontal */
+    align-items: center;    /* Zentriert vertikal */
+    flex-direction: column; /* Stapelt Text und Bild vertikal */
+    height: 100vh;          /* Stellt sicher, dass der Container den gesamten Viewport einnimmt */
 }
 
-img {
-    max-width: 100%;
-    height: auto;
-    margin: 10px;
-}
-
+/* Stil für h1 */
 h1 {
-    color: white;
-    text-align: center;
-    font-size: 2em;
+    color: white; /* Weiß für besseren Kontrast */
 }
 
+/* Stil für h2 */
+h2 {
+    color: white; /* Weiß für besseren Kontrast */
+}
+
+/* Stil für img */
+img {
+    width: 600px; /* oder gewünschte Breite */
+    height: 500px; /* sorgt für das richtige Seitenverhältnis */
+}
+
+/* Stil für Buttons */
 button {
-    background-color: green;
-    color: white;
-    border: none;
-    padding: 10px 5%;
-    margin: 5px;
-    cursor: pointer;
+    background-color: green; /* Grüner Hintergrund für alle Buttons */
+    color: white;            /* Weißer Text für guten Kontrast */
+    border: none;            /* Keine Ränder für einen sauberen Look */
+    padding: 10px 20px;      /* Innenabstand für bessere Lesbarkeit */
+    cursor: pointer;         /* Zeigt einen Pointer-Cursor bei Hover */
 }
 
 button:hover {
-    background-color: darkgreen;
+    background-color: darkgreen; /* Dunkleres Grün bei Hover für visuelles Feedback */
 }
 
-@media (max-width: 768px) {
-    h1 {
-        font-size: 1.5em;
-    }
+/* Stil für Labels */
+label.form-label {
+    color: white; /* Weißer Text für Labels */
+}
 
-    button {
-        padding: 10px 10%;
-    }
+/* Stil für spezifische Buttons */
+button.btn.btn-primary.btn-sm {
+    background-color: rgb(40, 147, 40);; /* Hellgrün für spezifische Buttons */
+    color: rgb(255, 255, 255); /* Schwarzer Text für guten Kontrast */
+    border: 1px solid green; /* Leichte Umrandung für Abgrenzung */
 }
